@@ -1,0 +1,36 @@
+# Dependency directories
+node_modules/
+
+# Build outputs (אם אתה משתמש ב-Babel/Rollup/Vite)
+dist/
+build/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Environment variables (חשוב מאוד - כדי לא לחשוף מפתחות אם יהיו)
+.env
+.env.local
+.env.development.local
+
+# OS Metadata (קבצי מערכת שנוצרים אוטומטית)
+.DS_Store
+Thumbs.db
+
+# IDEs / Editors (הגדרות אישיות של העורך שלך)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing (אם תוסיף בעתיד Jest/Cypress)
+coverage/
+.nyc_output
+
+# Documentation (אם אתה בונה תיעוד מקומי שלא אמור לעלות לקוד)
+docs/_site/
