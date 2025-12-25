@@ -1,7 +1,7 @@
 # Dependency directories
 node_modules/
 
-# Build outputs (אם אתה משתמש ב-Babel/Rollup/Vite)
+
 dist/
 build/
 out/
