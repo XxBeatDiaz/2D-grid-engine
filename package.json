@@ -1,0 +1,23 @@
+{
+  "name": "@beatdiaz/2d-grid-engine",
+  "version": "1.0.1",
+  "description": "A general-purpose 2D grid management engine",
+  "main": "src/index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "grid",
+    "engine",
+    "2d",
+    "matrix",
+    "game-development"
+  ],
+  "author": "BeatDiaz",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
