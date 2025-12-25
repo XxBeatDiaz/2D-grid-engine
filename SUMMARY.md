@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Home](README.md)
+* [2D Grid Engine](README.md)
 * [Getting Started](docs/getting-started.md)
 * [Core Concepts](docs/concepts.md)
 * [👁️ API Reference](api/README.md)
