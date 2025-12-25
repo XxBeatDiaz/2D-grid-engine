@@ -30,5 +30,3 @@ Thumbs.db
 # Testing (אם תוסיף בעתיד Jest/Cypress)
 coverage/
 .nyc_output
-
-.npmignore
