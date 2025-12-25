@@ -1,13 +1,46 @@
-```markdown
 # Core Concepts
 
-### Render-Agnostic Design
-Unlike most engines, this library does not draw pixels. It manages the **state** of your grid. Whether you use `console.log`, `React components`, or `HTML5 Canvas`, the engine provides the data structure you need.
+## Core Concepts
 
-### Entity-Component System (ECS)
-Entities are unique containers. Components are data objects.
-* **Entity**: A unique ID in the world (e.g., "Player #1").
-* **Component**: Specific data attached to an entity (e.g., `health`, `position`, `inventory`).
+{% code title="coords.js" %}
+```javascript
+const here = { row: 3, col: 7 };
+
+grid.getCellValue('terrain', here);
+grid.setCell('entities', here, someEntity);
+```
+{% endcode %}
+
+All operations target `{ row, col }`. Out-of-bounds reads should return `undefined`. Out-of-bounds writes should return `false`.
+
+### Coordinates and bounds
+
+{% hint style="info" %}
+Avoid mixing concerns in one layer. It keeps rules small and composable.
+{% endhint %}
+
+* `terrain`: walls, floors, water.
+* `entities`: player, NPCs, items.
+* `effects`: fog, decals, highlights.
+* `debug`: heatmaps, path costs, visibility.
+
+Layers let you stack different concerns at the same coordinates. Common patterns:
 
 ### Layers
-Layers allow you to stack information. You can check the `terrain` layer for walls while checking the `entities` layer for enemies at the same coordinates. This separation of concerns makes your game logic cleaner.
+
+* **Entity**: a unique object in the world (player, coin, monster).
+* **Component**: a named data blob (health, inventory, AI state).
+
+Entities are unique instances. Components are data attached to an entity.
+
+### ECS (Entity-Component System)
+
+{% hint style="info" %}
+Treat the engine as your “single source of truth”. Your renderer should be a pure projection of that state.
+{% endhint %}
+
+You can render with React, Canvas, DOM, or `console.log`.
+
+This library does not draw pixels. It manages **grid state** and exposes a predictable API.
+
+### Render-agnostic by design
