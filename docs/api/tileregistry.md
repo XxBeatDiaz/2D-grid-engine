@@ -16,7 +16,7 @@ Instead of storing complex objects in every cell, the grid stores simple IDs tha
 
 ### Code Example: Defining Terrain Logic
 
-```js
+```javaScript
 // Define what a 'WALL' is
 tiles.register("WALL", {
   walkPassable: false,
