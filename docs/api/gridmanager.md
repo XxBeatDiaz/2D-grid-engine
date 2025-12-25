@@ -1,68 +1,56 @@
-## 📐 GridManager
+# 📐 GridManager
 
-The **GridManager** is the heart of the engine. It handles the grid dimensions, manages multiple layers, and controls entity movement.
+The **GridManager** owns the grid state. It manages layers, bounds, and movement.
 
-### Core Functions
+Creates a new layer.
 
-- **addLayer(name, defaultTile)**  
-  Creates a new layer in the grid.
+#### `addLayer(name, defaultTile?)`
 
-  - `name`: Unique string identifier for the layer.
-  - `defaultTile` (Optional): The tile type that will fill the layer initially.
+### Key methods
 
-- **setCell(layerName, position, value)**  
-  Directly sets the content of a specific cell.
+* `name`: unique layer id.
+* `defaultTile` (optional): tile id to fill the layer.
 
-  - `position`: An object `{ row, col }`.
-  - `value`: Can be a tile ID, an entity instance, or `null`.
+#### `setCell(layerName, position, value)`
 
-- **getCellValue(layerName, position)**  
-  Returns whatever is currently at the specified position on the given layer.
+Writes a cell value.
 
-- **move(layerName, from, to)**  
-  The primary way to move entities. It handles clearing the old cell and filling the new one.  
-  Returns `true` if the move was successful, `false` otherwise.
+* `position`: `{ row, col }`.
+* `value`: tile id, entity instance, or `null`.
 
-### Code Example: Creating a Grid & Moving an Entity
+#### `getCellValue(layerName, position)`
 
+Reads a cell value.
+
+Moves an entity between two positions. Returns `true` on success.
+
+#### `move(layerName, from, to)`
+
+{% hint style="info" %}
+Movement is layer-scoped. Moving on `actors` won’t touch `terrain`.
+{% endhint %}
+
+### Example: create a grid and move an entity
+
+{% code title="move-entity.mjs" %}
 ```js
-import { createGridEngine } from "@beatdiaz/2d-grid-engine";
+import { createGridEngine } from '@beatdiaz/2d-grid-engine';
 
-// 1. Initialize a 10x10 Grid
 const { grid, entities, tiles } = createGridEngine(10, 10);
 
-// 2. Setup Terrain
-tiles.register("GRASS", { walkPassable: true });
-grid.addLayer("environment", "GRASS");
+tiles.register('GRASS', { walkPassable: true });
+grid.addLayer('environment', 'GRASS');
 
-// 3. Setup Objects Layer
-grid.addLayer("actors", null);
+grid.addLayer('actors', null);
 
-// 4. Create a Player Entity
-entities.register("PLAYER", {
-  defaultComponents: { position: { x: 0, y: 0 } },
+entities.register('PLAYER', {
+  defaultComponents: { position: { row: 0, col: 0 } },
 });
-const myPlayer = entities.create("PLAYER");
 
-// 5. Place Player at (0, 0)
-grid.setCell("actors", { row: 0, col: 0 }, myPlayer);
+const player = entities.create('PLAYER');
+grid.setCell('actors', { row: 0, col: 0 }, player);
 
-// 6. Move Player to (0, 1)
-const moveSuccessful = grid.move(
-  "actors",
-  { row: 0, col: 0 },
-  { row: 0, col: 1 }
-);
-
-if (moveSuccessful) {
-  console.log("Player is now at (0, 1)!");
-} else {
-  console.log("Move failed - cell might be occupied or out of bounds.");
-}
+const ok = grid.move('actors', { row: 0, col: 0 }, { row: 0, col: 1 });
+console.log('Moved:', ok);
 ```
-
-### Important Notes
-
-- **Bounds Checking** – GridManager automatically prevents actions outside the defined grid size.
-
-- **Layer Independence** – Moving an entity on the `actors` layer does not affect the `environment` layer beneath it.
+{% endcode %}

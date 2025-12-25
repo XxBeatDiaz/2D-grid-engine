@@ -1,78 +1,86 @@
 # 🏁 Getting Started
 
-Welcome to **2D Grid Engine**! This guide will help you set up your first grid environment in under 2 minutes.
+Build your first grid world in a few minutes. You’ll get a working state model you can render anywhere.
 
----
-
-### 1. Installation
-
-Install the package via NPM:
+{% stepper %}
+{% step %}
+### Install
 
 ```bash
 npm install @beatdiaz/2d-grid-engine
 ```
+{% endstep %}
 
-## 2️⃣ Your First Script
+{% step %}
+### Create your first script
 
-Create a file named `index.js` and add the following code to initialize a basic world.
+This script creates a grid, registers a tile, and writes one cell.
 
-This script:
-
-- Sets up a grid
-- Defines a wall tile type
-- Places it on a layer inside the grid
-
-You’ll now have a minimal world state ready to be rendered however you choose.
-
-```JavaScript
+{% code title="index.mjs" %}
+```js
 import { createGridEngine } from '@beatdiaz/2d-grid-engine';
 
-// 1. Create a 5x5 grid
-// This returns the three main controllers of the engine
-const { grid, entities, tiles } = createGridEngine(5, 5);
+const { grid, tiles } = createGridEngine(5, 5);
 
-// 2. Define a tile type
-// Tiles are static definitions used for terrain or walls
 tiles.register('WALL', { walkPassable: false });
 
-// 3. Add a layer
-// Layers allow you to stack different types of data (terrain, objects, etc.)
 grid.addLayer('base', null);
-
-// 4. Set a wall at the center (row 2, col 2)
 grid.setCell('base', { row: 2, col: 2 }, 'WALL');
 
-console.log('Grid initialized!');
 console.log('Cell (2,2) is:', grid.getCellValue('base', { row: 2, col: 2 }));
 ```
+{% endcode %}
+{% endstep %}
 
-## 3️⃣ Running the Engine
+{% step %}
+### Run it (ES Modules)
 
-Since this library uses modern **ES Modules**, you have two options to run it:
+Pick one option.
 
-### Option A
+{% tabs %}
+{% tab title="Option A: package.json" %}
+Add this to `package.json`:
 
-Add `"type": "module"` to your `package.json`.
-
-### Option B
-
-Rename your file from `index.js` to `index.mjs`.
-
-Then run the script using Node.js:
-
-```Bash
-node index.js
+```json
+{
+  "type": "module"
+}
 ```
 
-## 🚀 What’s next?
+Run:
+
+```bash
+node index.js
+```
+{% endtab %}
+
+{% tab title="Option B: .mjs" %}
+Keep the file as `index.mjs`.
+
+Run:
+
+```bash
+node index.mjs
+```
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+If Node complains about ESM, upgrade Node. Use Node 18+.
+{% endhint %}
+{% endstep %}
+{% endstepper %}
+
+### Next steps
+
+* Read the architecture in [Core Concepts](concepts.md).
+* Start with movement and layers in [GridManager](api/gridmanager.md).
 
 Now that you have your first grid running, you can:
 
-- 💡 **Learn how the engine separates data from display**  
+* 💡 **Learn how the engine separates data from display**\
   Understand how blueprints define behavior while renderers stay completely decoupled.
-
-- 📐 **Deep dive into layers and movement**  
+* 📐 **Deep dive into layers and movement**\
   Explore managing multiple layers and handling entity movement across the grid.
-
-- 👤 **Work with components**  
+* 👤 **Work with components**\
   Learn how to add, remove, and update components on your game objects dynamically.

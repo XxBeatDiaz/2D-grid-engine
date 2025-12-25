@@ -1,34 +1,34 @@
-## 🏭 EntityFactory
+# 🏭 EntityFactory
 
-The **EntityFactory** uses the **Blueprint Pattern** to define and instantiate game objects (Entities) with pre-configured components.
+The **EntityFactory** defines entity blueprints and spawns instances. Use it to keep entity creation consistent.
 
-### Core Functions
+Registers a blueprint.
 
-- **register(type, config)**  
-  Defines a new type of entity.
+#### `register(type, config)`
 
-  - `type`: A unique string (e.g., `'GOBLIN'`, `'CHEST'`).
-  - `config`: An object containing `defaultComponents`.
+### Methods
 
-- **create(type)**  
-  Instantiates a new Entity based on a registered blueprint.  
-  Returns a unique Entity instance with a generated `instanceId`.
+* `type`: unique id, like `'GOBLIN'` or `'CHEST'`.
+* `config.defaultComponents`: starting component data.
 
-### Code Example: Blueprints & Instantiation
+#### `create(type)`
 
+Creates a new entity instance from a blueprint. Returns an `Entity` with a new `instanceId`.
+
+### Example: blueprints and instantiation
+
+{% code title="entities.mjs" %}
 ```js
-// Register a template for a Player
-entities.register("PLAYER", {
+entities.register('PLAYER', {
   defaultComponents: {
     health: { hp: 100, max: 100 },
     stats: { strength: 10, speed: 5 },
   },
 });
 
-// Create two separate instances
-const player1 = entities.create("PLAYER");
-const player2 = entities.create("PLAYER");
+const player1 = entities.create('PLAYER');
+const player2 = entities.create('PLAYER');
 
-// Each has a unique ID but the same starting components
 console.log(player1.instanceId !== player2.instanceId); // true
 ```
+{% endcode %}

@@ -1,36 +1,36 @@
-## 🧱 TileRegistry
+# 🧱 TileRegistry
 
-The **TileRegistry** manages the "definitions" of your grid cells.  
-Instead of storing complex objects in every cell, the grid stores simple IDs that point here.
+The **TileRegistry** stores tile definitions. The grid stores tile ids, not full objects.
 
-### Core Functions
+Defines a tile type.
 
-- **register(id, properties)**  
-  Defines a tile type and its physical/logical traits.
+#### `register(id, properties)`
 
-  - `id`: Unique identifier (e.g., `'WATER'`, `'WALL'`).
-  - `properties`: Custom data (e.g., `walkPassable: false`).
+### Methods
 
-- **get(id)**  
-  Retrieves the properties for a specific tile type.
+* `id`: unique id, like `'WATER'` or `'WALL'`.
+* `properties`: any JSON-ish data your rules need.
 
-### Code Example: Defining Terrain Logic
+#### `get(id)`
 
-```javaScript
-// Define what a 'WALL' is
-tiles.register("WALL", {
+Returns the properties for a tile id.
+
+### Example: terrain logic
+
+{% code title="tiles.mjs" %}
+```js
+tiles.register('WALL', {
   walkPassable: false,
   blocksVision: true,
-  texture: "stone_wall.png",
+  texture: 'stone_wall.png',
 });
 
-// Define what 'FLOOR' is
-tiles.register("FLOOR", {
+tiles.register('FLOOR', {
   walkPassable: true,
   blocksVision: false,
 });
 
-// Use these IDs in the GridManager
-grid.addLayer("terrain", "FLOOR");
-grid.setCell("terrain", { row: 5, col: 5 }, "WALL");
+grid.addLayer('terrain', 'FLOOR');
+grid.setCell('terrain', { row: 5, col: 5 }, 'WALL');
 ```
+{% endcode %}
