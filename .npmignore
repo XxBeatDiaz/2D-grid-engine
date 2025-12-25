@@ -5,3 +5,9 @@ node_modules/
 tests/
 *.log
 tsconfig.json
+jest.config.js
+docs/
+SUMMARY.md
+.idea/
+npm-debug.log*
+.cache/
