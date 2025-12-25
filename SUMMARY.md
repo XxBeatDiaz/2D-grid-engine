@@ -1,10 +1,11 @@
 # Table of contents
 
-* [2D Grid Engine](README.md)
-* [Getting Started](docs/getting-started.md)
-* [Core Concepts](docs/concepts.md)
-* [👁️ API Reference](api/README.md)
-  * [GridManager](api/gridmanager.md)
-  * [EntityFactory](api/entityfactory.md)
-  * [Entity](api/entity.md)
-  * [TileRegistry](api/tileregistry.md)
+* [🚀 Introduction](README.md)
+* [🏁 Getting Started](docs/getting-started.md)
+* [💡 Core Concepts](docs/concepts.md)
+
+## API Reference
+* [📐 GridManager](docs/api/grid-manager.md)
+* [🏭 EntityFactory](docs/api/entity-factory.md)
+* [👤 Entity](docs/api/entity.md)
+* [🧱 TileRegistry](docs/api/tile-registry.md)

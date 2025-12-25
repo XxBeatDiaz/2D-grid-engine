@@ -1,46 +1,29 @@
-# Core Concepts
+💡 Core Concepts
+Understanding the philosophy behind the 2D Grid Engine will help you build more complex simulations.
 
-## Core Concepts
+1. Layered Architecture
+   Instead of one "big matrix", this engine uses multiple layers stacked on top of each other.
 
-{% code title="coords.js" %}
-```javascript
-const here = { row: 3, col: 7 };
+The Benefit: You can have a "Terrain" layer that never changes, an "Objects" layer for items, and an "Actors" layer for players/NPCs.
 
-grid.getCellValue('terrain', here);
-grid.setCell('entities', here, someEntity);
-```
-{% endcode %}
+Movement: When you move an entity on the Actors layer, the Terrain layer beneath it remains untouched.
 
-All operations target `{ row, col }`. Out-of-bounds reads should return `undefined`. Out-of-bounds writes should return `false`.
+2. Blueprint-Based ECS (Entity Component System)
+   The engine follows a lightweight ECS pattern:
 
-### Coordinates and bounds
+Entities: Just a unique ID.
 
-{% hint style="info" %}
-Avoid mixing concerns in one layer. It keeps rules small and composable.
-{% endhint %}
+Components: Simple data objects (like health: { hp: 10 }) attached to entities.
 
-* `terrain`: walls, floors, water.
-* `entities`: player, NPCs, items.
-* `effects`: fog, decals, highlights.
-* `debug`: heatmaps, path costs, visibility.
+Blueprints: You don't create entities from scratch every time. You register a blueprint once (e.g., 'ZOMBIE') and instantiate it many times.
 
-Layers let you stack different concerns at the same coordinates. Common patterns:
+3. Decoupled Display (Display Agnostic)
+   The engine handles only the logic. It doesn't care if you use:
 
-### Layers
+HTML5 Canvas
 
-* **Entity**: a unique object in the world (player, coin, monster).
-* **Component**: a named data blob (health, inventory, AI state).
+PixiJS / Phaser
 
-Entities are unique instances. Components are data attached to an entity.
+React / Vue
 
-### ECS (Entity-Component System)
-
-{% hint style="info" %}
-Treat the engine as your “single source of truth”. Your renderer should be a pure projection of that state.
-{% endhint %}
-
-You can render with React, Canvas, DOM, or `console.log`.
-
-This library does not draw pixels. It manages **grid state** and exposes a predictable API.
-
-### Render-agnostic by design
+Terminal/Console You simply listen to the grid state and render it however you like.

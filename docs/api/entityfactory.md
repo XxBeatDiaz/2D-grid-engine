@@ -1,52 +1,32 @@
----
-description: Register entity blueprints and create entity instances.
----
+🏭 EntityFactory
+The EntityFactory uses the Blueprint Pattern to define and instantiate game objects (Entities) with pre-configured components.
 
-# EntityFactory
+Core Functions
+register(type, config)
+Defines a new type of entity.
 
-## EntityFactory
+type: A unique string (e.g., 'GOBLIN', 'CHEST').
 
-Registers entity blueprints and creates unique entity instances.
+config: An object containing defaultComponents.
 
-### `register(typeId, config)`
+create(type)
+Instantiates a new Entity based on a registered blueprint.
 
-Define a blueprint for an entity type.
+Returns a unique Entity instance with a generated instanceId.
 
-* **Parameters**
-  * `typeId` (`string`): unique entity type id. Example: `PLAYER`, `COIN`.
-  * `config` (`object`)
-  * `config.defaultComponents` (`object`): component map.
-* **Returns**: `void`
+Code Example: Blueprints & Instantiation
 
-{% code title="Example" %}
-```js
-entities.register('COIN', {
-  defaultComponents: {
-    value: 1,
-  },
+// Register a template for a Player
+entities.register('PLAYER', {
+    defaultComponents: {
+        health: { hp: 100, max: 100 },
+        stats: { strength: 10, speed: 5 }
+    }
 });
-```
-{% endcode %}
 
-{% hint style="info" %}
-Keep components as plain data. Avoid putting functions inside component objects.
-{% endhint %}
+// Create two separate instances
+const player1 = entities.create('PLAYER');
+const player2 = entities.create('PLAYER');
 
-### `create(typeId)`
-
-Create a new `Entity` instance from a blueprint.
-
-* **Parameters**
-  * `typeId` (`string`): a registered blueprint id.
-* **Returns**: `Entity`
-
-{% code title="Example" %}
-```js
-const coin = entities.create('COIN');
-```
-{% endcode %}
-
-### Related
-
-* Back to [API Reference](./)
-* See [Entity](entity.md) for instance behavior
+// Each has a unique ID but the same starting components
+console.log(player1.instanceId !== player2.instanceId); // true

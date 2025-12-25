@@ -1,91 +1,34 @@
-# Getting Started
+🏁 Getting Started
+Welcome to 2D Grid Engine! This guide will help you set up your first grid environment in under 2 minutes.
 
-Set up a tiny world with layers, tiles, and a player entity. This is the fastest path to “state you can render”.
+1. Installation
+   Install the package via NPM:
 
-{% hint style="info" %}
-Keep rendering separate. Build rules on top of grid state.
-{% endhint %}
+Bash
 
-### Next steps
+npm install @beatdiaz/2d-grid-engine 2. Your First Script
+Create a file named index.js and add the following code to initialize a basic world:
 
-{% stepper %}
-{% step %}
-### Install
+JavaScript
 
-{% code title="Terminal" %}
-```bash
-npm install @beatdiaz/2d-grid-engine
-```
-{% endcode %}
-{% endstep %}
-
-{% step %}
-### Initialize the engine
-
-{% code title="engine.js" %}
-```javascript
 import { createGridEngine } from '@beatdiaz/2d-grid-engine';
 
-// Create a 12x12 grid world.
-const { grid, tiles, entities } = createGridEngine(12, 12);
-```
-{% endcode %}
-{% endstep %}
+// Create a 5x5 grid
+const { grid, entities, tiles } = createGridEngine(5, 5);
 
-{% step %}
-### Register tiles and entity blueprints
+// 1. Define a tile
+tiles.register('WALL', { walkPassable: false });
 
-{% code title="blueprints.js" %}
-```javascript
-// Terrain tile (static data).
-tiles.register('WALL', {
-  walkPassable: false,
-  metadata: { color: '#333' },
-});
+// 2. Add a layer
+grid.addLayer('base', null);
 
-// Entity type (dynamic instances).
-entities.register('PLAYER', {
-  defaultComponents: {
-    health: { current: 3, max: 3 },
-    score: { total: 0 },
-  },
-});
-```
-{% endcode %}
+// 3. Set a wall at the center
+grid.setCell('base', { row: 2, col: 2 }, 'WALL');
 
-{% hint style="info" %}
-Prefer `null` defaults for layers that will store entities. It makes “empty cell” checks cheap and explicit.
-{% endhint %}
-{% endstep %}
+console.log('Grid initialized!');
+console.log('Cell (2,2) is:', grid.getCellValue('base', { row: 2, col: 2 })); 3. Running the Engine
+Since this is an ES Module, ensure your package.json has "type": "module" or use the .mjs extension. Run it using:
 
-{% step %}
-### Create layers
+Bash
 
-{% code title="layers.js" %}
-```javascript
-// Static terrain. Use a tile id or tile object, depending on your setup.
-grid.addLayer('terrain', null);
-
-// Dynamic entities. `null` means “no entity”.
-grid.addLayer('entities', null);
-```
-{% endcode %}
-{% endstep %}
-
-{% step %}
-### Spawn an entity
-
-{% code title="spawn.js" %}
-```javascript
-const player = entities.create('PLAYER');
-
-grid.setCell('entities', { row: 1, col: 1 }, player);
-
-console.log('Player spawned at (row=1, col=1)');
-```
-{% endcode %}
-{% endstep %}
-{% endstepper %}
-
-* Learn the model in [Core Concepts](concepts.md).
-* Browse methods in [API Reference](../api/).
+node index.js

@@ -1,95 +1,100 @@
----
-icon: grid-4
----
+🚀 2D Grid Engine
+A lightweight, render-agnostic engine for 2D grid state. Use it for roguelikes, tactics, simulations, or any grid UI. It works seamlessly with React, Canvas, DOM, or the Terminal.
 
-# 2D Grid Engine
+🤔 Why it’s useful
+This library does not render. It owns the data model; you choose how to draw it.
 
-## 2D Grid Engine
+Logic Isolation: Keep all your grid logic in one organized place.
 
-A lightweight, render-agnostic engine for **2D grid state**. Use it for roguelikes, tactics, simulations, or any grid UI. It works with React, Canvas, DOM, or the terminal.
+Layered Design: Separate terrain, entities, and effects using distinct layers.
 
-### Why it’s useful
+Data-Driven: Model your state with ECS-style components.
 
-{% hint style="info" %}
-This library **does not render**. It owns the data model. You choose how to draw it.
-{% endhint %}
+Renderer Freedom: Swap your frontend (from Canvas to React) without rewriting your game rules.
 
-* Keep grid logic in one place.
-* Separate terrain, entities, and effects with layers.
-* Model state with ECS-style components.
-* Swap renderers without rewriting rules.
+🎮 Typical Use Cases
+Roguelikes: Manage maps with walls, fog-of-war, and items.
 
-### Typical use cases
+Tactical Games: Track units, zones, and pathing data.
 
-* Roguelike maps with walls, fog, and items.
-* Strategy games with units, zones, and pathing data.
-* Grid dashboards and visualizations.
-* Puzzle games with stacked rules per cell.
+Grid Dashboards: Create data visualizations and spreadsheets.
 
-### What you get
+Puzzle Games: Implement stacked rules and complex cell interactions.
 
-#### Included
+📦 What you get
+Included
+Grid: A bounded 2D coordinate system { row, col }.
 
-* A bounded 2D grid with coordinates `{ row, col }`.
-* Multiple named layers, each with its own default cell value.
-* Registries for tiles and entity blueprints.
-* Entity instances with component data.
+Layers: Multiple named layers, each with its own default cell value.
 
-#### Not included
+Registries: Centralized storage for Tiles and Entity blueprints.
 
-* Rendering, sprites, animation, or UI widgets.
-* Physics or collision resolution beyond what you model.
-* Pathfinding (you can build it on top of layers).
+Instances: Unique entity instances with dynamic component data.
 
-### Get started
+Not included
+Rendering: No sprites, animations, or UI widgets.
 
-{% stepper %}
-{% step %}
-### Install
+Physics: No collision resolution beyond what you model in logic.
 
-{% code title="Terminal" %}
-```bash
-npm install @beatdiaz/2d-grid-engine
-```
-{% endcode %}
-{% endstep %}
+Pathfinding: You can easily build A\* or Dijkstra on top of the layers.
 
-{% step %}
-### Create a world and add layers
+🏁 Get Started
 
-Follow the runnable walkthrough in [Getting Started](docs/getting-started.md).
+1. Install
+   Bash
 
-* Create the engine with a grid size.
-* Add a `terrain` layer for static tiles.
-* Add an `entities` layer for dynamic instances.
-{% endstep %}
+npm install @beatdiaz/2d-grid-engine 2. Create a World
+Follow the runnable walkthrough in Getting Started.
 
-{% step %}
-### Render it your way
+JavaScript
 
-* Read the grid state each frame, or after actions.
-* Render cells using React, Canvas, DOM, or console output.
-* Keep rules in pure functions that read/write layers.
-{% endstep %}
-{% endstepper %}
+import { createGridEngine } from '@beatdiaz/2d-grid-engine';
 
-### Core concepts
+// Create engine with a 10x10 grid
+const { grid, entities, tiles } = createGridEngine(10, 10);
 
-* **Grid**: size + bounds checks + layer storage.
-* **Layer**: a matrix of values (terrain, entities, effects).
-* **Tile**: static world data (walkability, metadata, etc.).
-* **Entity**: a unique instance with components (health, inventory, AI state).
+// Add layers for different concerns
+grid.addLayer('terrain', 'GRASS'); // Static tiles
+grid.addLayer('entities', null); // Dynamic instances 3. Render it your way
+Read the grid state each frame or after actions, and project it to your chosen display (React, Canvas, or Console).
 
-Learn the model in [Core Concepts](docs/concepts.md).
+💡 Core Concepts
+Grid: Handles size, bounds checks, and layer storage.
 
-### Key principles
+Layer: A matrix of values (terrain, entities, effects).
 
-* Treat the engine as your single source of truth.
-* Keep layers focused (terrain vs entities vs effects).
-* Keep rendering as a pure projection of state.
+Tile: Static world data (walkability, metadata, etc.).
 
-### Next links
+Entity: A unique instance with components (health, inventory, AI state).
 
-* Start here: [Getting Started](docs/getting-started.md)
-* Learn the model: [Core Concepts](docs/concepts.md)
-* Browse methods: [API Reference](api/)
+⚖️ Key Principles
+Single Source of Truth: Treat the engine as the absolute state of your world.
+
+Focus Your Layers: Keep concerns separate (Terrain vs. Entities vs. Effects).
+
+Pure Projection: Keep rendering as a pure visual reflection of the underlying state.
+
+🔗 Documentation Links
+Start Here: Getting Started
+
+Learn the Model: Core Concepts
+
+Browse Methods: API Reference
+
+🤝 Contributing
+Got an idea for a new feature? Found a bug? We’d love your help to make this engine even better!
+
+Open an Issue: Use GitHub Issues to report bugs or suggest new ideas.
+
+Submit a Pull Request:
+
+Fork the repository.
+
+Create a feature branch.
+
+Submit your PR with a clear description of the changes.
+
+All contributions, from documentation fixes to core logic improvements, are welcome!
+
+📄 License
+This project is licensed under the MIT License. See the LICENSE file for more details.

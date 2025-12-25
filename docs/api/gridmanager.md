@@ -1,91 +1,67 @@
----
-description: Grid layers and cell operations.
----
+📐 GridManager
+The GridManager is the heart of the engine. It handles the grid dimensions, manages multiple layers, and controls entity movement.
 
-# GridManager
+Core Functions
+addLayer(name, defaultTile)
+Creates a new layer in the grid.
 
-## GridManager
+name: Unique string identifier for the layer.
 
-Owns the 2D coordinate system and all grid layers. Use it to create layers and read/write/move values.
+defaultTile: (Optional) The tile type that will fill the layer initially.
 
-### `addLayer(name, defaultValue)`
+setCell(layerName, position, value)
+Directly sets the content of a specific cell.
 
-Create a new layer matrix.
+position: An object { row, col }.
 
-* **Parameters**
-  * `name` (`string`): layer id. Example: `terrain`, `entities`.
-  * `defaultValue` (`any`): value for every cell.
-* **Returns**: `void`
+value: Can be a tile ID, an entity instance, or null.
 
-{% hint style="info" %}
-Use `null` for layers that hold dynamic entities. It makes empty checks explicit.
-{% endhint %}
+getCellValue(layerName, position)
+Returns whatever is currently at the specified position on the given layer.
 
-{% code title="Signature" %}
-```ts
-addLayer(name: string, defaultValue: any): void
-```
-{% endcode %}
+move(layerName, from, to)
+The primary way to move entities. It handles the logic of clearing the old cell and filling the new one.
 
-### `getCellValue(layerName, coords)`
+Returns true if the move was successful, false otherwise.
 
-Read the value at a coordinate.
+Code Example: Creating a Grid & Moving an Entity
+This example demonstrates how to set up a basic environment and move a player character.
 
-* **Parameters**
-  * `layerName` (`string`)
-  * `coords` (`{ row: number, col: number }`)
-* **Returns**: `any | undefined`
+import { createGridEngine } from '@beatdiaz/2d-grid-engine';
 
-{% code title="Example" %}
-```js
-const value = grid.getCellValue('terrain', { row: 0, col: 0 });
-```
-{% endcode %}
+// 1. Initialize a 10x10 Grid
+const { grid, entities, tiles } = createGridEngine(10, 10);
 
-{% hint style="info" %}
-Out-of-bounds reads return `undefined`.
-{% endhint %}
+// 2. Setup Terrain
+tiles.register('GRASS', { walkPassable: true });
+grid.addLayer('environment', 'GRASS');
 
-### `setCell(layerName, coords, value)`
+// 3. Setup Objects Layer
+grid.addLayer('actors', null);
 
-Write a value into a cell.
+// 4. Create a Player Entity
+entities.register('PLAYER', {
+defaultComponents: { position: { x: 0, y: 0 } }
+});
+const myPlayer = entities.create('PLAYER');
 
-* **Parameters**
-  * `layerName` (`string`)
-  * `coords` (`{ row: number, col: number }`)
-  * `value` (`any`)
-* **Returns**: `boolean`
+// 5. Place Player at (0, 0)
+grid.setCell('actors', { row: 0, col: 0 }, myPlayer);
 
-{% code title="Example" %}
-```js
-// Place an entity.
-grid.setCell('entities', { row: 2, col: 5 }, enemy);
+// 6. Move Player to (0, 1)
+const moveSuccessful = grid.move(
+'actors',
+{ row: 0, col: 0 },
+{ row: 0, col: 1 }
+);
 
-// Clear a cell.
-grid.setCell('entities', { row: 2, col: 5 }, null);
-```
-{% endcode %}
+if (moveSuccessful) {
+console.log("Player is now at (0, 1)!");
+} else {
+console.log("Move failed - cell might be occupied or out of bounds.");
+}
 
-### `move(layerName, fromCoords, toCoords)`
+Important Notes
+Bounds Checking: GridManager automatically prevents actions outside the defined grid size.
 
-Atomically move a value inside the same layer.
-
-* **Parameters**
-  * `layerName` (`string`)
-  * `fromCoords` (`{ row: number, col: number }`)
-  * `toCoords` (`{ row: number, col: number }`)
-* **Returns**: `boolean`
-
-{% code title="Example" %}
-```js
-grid.move('entities', { row: 1, col: 1 }, { row: 1, col: 2 });
-```
-{% endcode %}
-
-{% hint style="warning" %}
-Returns `false` if the source cell is empty. Also returns `false` if destination is out of bounds.
-{% endhint %}
-
-### Related
-
-* Back to [API Reference](./)
+Layer Independence: Moving an entity on the actors layer does not affect the environment layer beneath it.

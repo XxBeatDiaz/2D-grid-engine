@@ -1,45 +1,32 @@
----
-description: Register and retrieve static tile definitions.
----
+🧱 TileRegistry
+The TileRegistry manages the "definitions" of your grid cells. Instead of storing complex objects in every cell, the grid stores simple IDs that point here.
 
-# TileRegistry
+Core Functions
+register(id, properties)
+Defines a tile type and its physical/logical traits.
 
-## TileRegistry
+id: Unique identifier (e.g., 'WATER', 'WALL').
 
-Stores static world definitions. Typically used for terrain in a `terrain` layer.
+properties: Custom data (e.g., walkPassable: false).
 
-### `register(id, properties)`
+get(id)
+Retrieves the properties for a specific tile type.
 
-Register a tile definition.
+Code Example: Defining Terrain Logic
 
-* **Parameters**
-  * `id` (`string`): tile id. Example: `GRASS`, `WALL`.
-  * `properties` (`object`): arbitrary metadata.
-* **Returns**: `void`
-
-{% code title="Example" %}
-```js
+// Define what a 'WALL' is
 tiles.register('WALL', {
-  walkPassable: false,
-  metadata: { color: '#333' },
+    walkPassable: false,
+    blocksVision: true,
+    texture: 'stone_wall.png'
 });
-```
-{% endcode %}
 
-### `get(id)`
+// Define what 'FLOOR' is
+tiles.register('FLOOR', {
+    walkPassable: true,
+    blocksVision: false
+});
 
-Fetch a tile definition.
-
-* **Parameters**
-  * `id` (`string`)
-* **Returns**: `object | undefined`
-
-{% code title="Example" %}
-```js
-const wall = tiles.get('WALL');
-```
-{% endcode %}
-
-### Related
-
-* Back to [API Reference](./)
+// Use these IDs in the GridManager
+grid.addLayer('terrain', 'FLOOR');
+grid.setCell('terrain', { row: 5, col: 5 }, 'WALL');
