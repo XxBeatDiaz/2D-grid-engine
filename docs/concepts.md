@@ -1,4 +1,4 @@
-# 💡 Core Concepts
+# Core Concepts
 
 ### Layered grids
 

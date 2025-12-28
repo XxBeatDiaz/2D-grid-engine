@@ -1,4 +1,4 @@
-# 🧱 TileRegistry
+# TileRegistry
 
 The **TileRegistry** stores tile definitions. The grid stores tile ids, not full objects.
 

@@ -1,4 +1,4 @@
-# 📐 GridManager
+# GridManager
 
 The **GridManager** owns the grid state. It manages layers, bounds, and movement.
 

@@ -1,4 +1,4 @@
-# 🏭 EntityFactory
+# EntityFactory
 
 The **EntityFactory** defines entity blueprints and spawns instances. Use it to keep entity creation consistent.
 

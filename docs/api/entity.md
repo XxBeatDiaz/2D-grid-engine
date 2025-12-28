@@ -1,4 +1,4 @@
-# 👤 Entity
+# Entity
 
 `Entity` is a runtime container for component data. It’s built for a lightweight, data-first ECS style.
 

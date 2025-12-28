@@ -1,4 +1,4 @@
-# 🏁 Getting Started
+# Getting Started
 
 Build your first grid world in a few minutes. You’ll get a working state model you can render anywhere.
 

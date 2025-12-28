@@ -2,7 +2,7 @@
 description: A quick overview of the 2D Grid Engine.
 ---
 
-# 👋 Introduction
+# Introduction
 
 **2D Grid Engine** is a small, display-agnostic library for grid-based worlds. It gives you clean data structures for tiles, entities, and movement.
 
